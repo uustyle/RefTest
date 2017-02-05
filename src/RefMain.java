@@ -33,8 +33,21 @@ public class RefMain {
 		subHogeList.add(subHoge2);
 		h.setSubHogeList(subHogeList);
 
-		Field[] fields = ReflectionUtil.sortFld2(h);
-		ReflectionUtil.getFldData(h, fields);
+		List<Integer> intList = new ArrayList<Integer>();
+		intList.add(1);
+		intList.add(2);
+		h.setIntList(intList);
+
+		List<List<Integer>> intList2 = new ArrayList<List<Integer>>();
+		intList2.add(intList);
+
+		Field field = h.getClass().getDeclaredField("intList2");
+		boolean ret = ReflectionUtil.isNumber(field.getType(), h, field);
+System.out.println("ret=" + ret);
+
+
+//		Field[] fields = ReflectionUtil.sortFld2(h);
+//		ReflectionUtil.getFldData(h, fields);
 
 	}
 

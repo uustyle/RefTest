@@ -1,5 +1,6 @@
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -140,6 +141,55 @@ public class ReflectionUtil {
 
 
 	}
+
+
+	public static boolean isNumber(Class<?> type, Object obj, Field field) throws Exception {
+
+        if (type == Integer.class || type == int.class) {
+        	return true;
+        }
+        else if (type == List.class) {
+        	Type type1;
+        	type1 = field.getGenericType();
+        	type1 = ( (ParameterizedType)type1).getActualTypeArguments()[0];
+        	System.out.println(type1.getClass());
+        	System.out.println(( (ParameterizedType)type1).getActualTypeArguments());
+
+            return isNumber((Class)type1, obj, field);
+
+        	//        	System.out.println(field.getGenericType());
+//
+//        	Type type1;
+//        	type1 = field.getGenericType();
+//            return isNumber(( (ParameterizedType)field).getActualTypeArguments()[0], obj, field);
+
+//      	type1 = ( (ParameterizedType)field).getActualTypeArguments()[0];
+//		System.out.println(type + " : " + type.getClass());
+
+//    		System.out.println(type + " : " + type.getClass());
+//
+//    		type1 = ( (ParameterizedType)type1).getActualTypeArguments()[0];
+//    		System.out.println(type + " : " + type1.getClass());
+//
+//            Class actualClass =
+//                    ((Class) ((ParameterizedType) field.getGenericType())
+//                        .getActualTypeArguments()[0]);
+
+//        	Type type1 = field.getGenericType();
+//        	type1.
+//        	System.out.println(type + " : " + type.getClass());
+//
+//    		type = ( (ParameterizedType)type).getActualTypeArguments()[0];
+//    		System.out.println(type + " : " + type.getClass());
+
+//            return isNumber(actualClass, obj, field);
+        }
+    	return false;
+
+
+
+	}
+
 
 
 
