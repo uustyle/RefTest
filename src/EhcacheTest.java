@@ -13,28 +13,27 @@ public class EhcacheTest {
 
 	public void getEhcacheDtoList(int jobNo, int status){
 
-		List<EhcacheDto> ehcacheDtoList = null;
-		if (status >= 10 && status <= 20){
+		System.out.println("getEhcacheDtoList jobNo=" + jobNo + " status=" + status);
 
-			Cache myCache = manager.getCache("myCache");
-			Element e = myCache.get(-2);
-			if (e == null){
-				ehcacheDtoList = java.util.Arrays.asList(null,null);
-				myCache.put(new Element(-2, ehcacheDtoList));
-			} else {
-				ehcacheDtoList = (List<EhcacheDto>)e.getObjectValue();
-			}
+		List<EhcacheDto> ehcacheDtoList = null;
+		Cache myCache = manager.getCache("myCache");
+		Element e = myCache.get(-2);
+		if (e == null){
+			ehcacheDtoList = java.util.Arrays.asList(null,null);
+			myCache.put(new Element(-2, ehcacheDtoList));
+		} else {
+			ehcacheDtoList = (List<EhcacheDto>)e.getObjectValue();
+		}
+
+		if (status >= 10 && status <= 20){
+			//搬送中
 			if (!((status >= 12) && (status <= 17))){
+				//前、後でない
 				setEhcacheDto(jobNo, status, ehcacheDtoList);
 			}
 
 		} else {
-			Cache myCache = manager.getCache("myCache");
-			Element e = myCache.get(-2);
-			if (e != null){
-				ehcacheDtoList = (List<EhcacheDto>)e.getObjectValue();
-				removeEhcacheDto(jobNo, ehcacheDtoList);
-			}
+				removeEhcacheDto(jobNo, status, ehcacheDtoList);
 		}
 		debug(jobNo,status,ehcacheDtoList);
 
@@ -61,18 +60,22 @@ public class EhcacheTest {
 		}
 	}
 
-	private void removeEhcacheDto(int jobNo, List<EhcacheDto> ehcacheDtoList) {
-		for(int i = 0; i< ehcacheDtoList.size(); i++) {
-			if (ehcacheDtoList.get(i) != null && ehcacheDtoList.get(i).getJobNo() == jobNo) {
-				ehcacheDtoList.set(i, null);
-				break;
+	private void removeEhcacheDto(int jobNo, int status, List<EhcacheDto> ehcacheDtoList) {
+
+		if (status > 20) {
+			for(int i = 0; i< ehcacheDtoList.size(); i++) {
+				if (ehcacheDtoList.get(i) != null && ehcacheDtoList.get(i).getJobNo() == jobNo) {
+					ehcacheDtoList.set(i, null);
+					break;
+				}
 			}
 		}
+
 	}
 
 	private void debug(int jobNo, int status,List<EhcacheDto> ehcacheDtoList) {
 
-		System.out.println("jobNo=" + jobNo + " status=" + status);
+		System.out.println("debug jobNo=" + jobNo + " status=" + status);
 		if (ehcacheDtoList == null){
 			System.out.println("なし");
 		} else {

@@ -10,6 +10,7 @@ public class EhcacheMain {
 		ehcacheTest.getEhcacheDtoList(2, 10);
 //		ehcacheTest.getEhcacheDtoList(2, 11);
 		ehcacheTest.getEhcacheDtoList(3, 11);
+		ehcacheTest.getEhcacheDtoList(1, 9);
 
 		ehcacheTest.getEhcacheDtoList(1, 12);
 		ehcacheTest.getEhcacheDtoList(1, 15);
